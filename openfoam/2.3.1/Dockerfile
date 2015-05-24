@@ -3,18 +3,37 @@ MAINTAINER Jarrod Sinclair <jarrod.sinclair@gmail.com>
 
 RUN apt-get -q update && \
     apt-get -q -y upgrade && \
-    apt-get -q -y install adduser vim zip unzip imagemagick libav-tools python3 python3-dev && \
-    curl -s https://bootstrap.pypa.io/get-pip.py | python3 && \
+    apt-get -q -y install \
+        adduser \
+        gfortran \
+        imagemagick \
+        libatlas-base-dev \
+        libav-tools \
+        libffi-dev \
+        libfreetype6-dev \
+        libjpeg-dev \
+        liblcms2-dev \
+        libpng12-dev \
+        libssl-dev \
+        libtiff-dev \
+        libwebp-dev \
+        libxft-dev \
+        pkg-config \
+        python-pip \
+        python3 \
+        python3-dev \
+        python3-pip \
+        unzip \
+        vim \
+        zip \
+        zlib1g-dev
 
-    pip2 -q install numpy && pip3 -q install numpy && \
-    apt-get -q -y install libatlas-base-dev gfortran && \
-    pip2 -q install scipy && pip3 -q install scipy && \
-    apt-get -q -y install libfreetype6-dev libxft-dev && \
-    pip2 -q install matplotlib && pip3 -q install matplotlib && \
-    apt-get -q -y install libjpeg-dev libtiff-dev liblcms2-dev libwebp-dev && \
-    pip2 -q install Pillow && pip3 -q install Pillow && \
+RUN pip2 install numpy && pip3 install numpy && \
+    pip2 install scipy && pip3 install scipy && \
+    pip2 install matplotlib && pip3 install matplotlib && \
+    pip2 install Pillow && pip3 install Pillow
 
-    echo "deb http://www.openfoam.org/download/ubuntu utopic main" > /etc/apt/sources.list.d/openfoam.list && \
+RUN echo "deb http://www.openfoam.org/download/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/openfoam.list && \
     apt-get -q update && \
     apt-get -q -y --force-yes install openfoam231 && \
     adduser --disabled-password --gecos "" ubuntu
